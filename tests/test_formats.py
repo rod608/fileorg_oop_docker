@@ -1,5 +1,5 @@
 """ Testing the Format class. """
-from formats import Format
+from app.formats import Format
 
 
 def test_constructor(f_default, f_full):

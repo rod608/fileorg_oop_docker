@@ -1,8 +1,8 @@
 import os
 import pytest
 
-from dir_organize import DirOrganize
-from formats import Format
+from app.dir_organize import DirOrganize
+from app.formats import Format
 from organize_script import my_formats
 
 

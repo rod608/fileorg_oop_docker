@@ -1,7 +1,7 @@
 import os
 
-from dir_organize import DirOrganize
-from formats import Format
+from app.dir_organize import DirOrganize
+from app.formats import Format
 
 
 def my_formats() -> Format:
@@ -44,4 +44,7 @@ def organize_desktop() -> None:
 
 # main method; signifies a script
 if __name__ == "__main__":
+    # setup logs
+
+    # run the script
     organize_desktop()

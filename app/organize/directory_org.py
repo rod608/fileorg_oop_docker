@@ -6,12 +6,12 @@ from app.formats import Format
 
 
 class OrganizeDirectory:
-    """ Class for Organizing Files from one Directory into another Directory or Folders """
+    """ Class for Organizing Files in a Directory. Files can be moved to another directory and/or within folders. """
 
     def __init__(self, formats_obj: Format, paths: tuple[str, str], folders: dict[str, str] = None):
-        """ Constructor & Instance Attributes: Method Overloading not supported in Python 😞 """
+        """ Instance Attributes. Specify format types/extensions, paths to organize, and folders to create. """
         self._formats = formats_obj  # Format Types & Their Extensions.
-        self._og_path = paths[0]  # Directory to Organize.
+        self._og_path = paths[0]     # Directory w/ Files to Organize.
         self._final_path = paths[1]  # Target Directory. Folders are created, files are moved.
         self._folders = folders if folders else {}  # format_type -> folder_name
 
@@ -51,7 +51,7 @@ class OrganizeDirectory:
         return files
 
     def _create_folders(self) -> None:
-        """ Helper Method: Create folders that associate themselves w/ the formats. """
+        """ For each key in the 'folders' dictionary, create a folder in the final dir if the format type is valid.  """
         os.chdir(self._final_path)
 
         if self._folders:
@@ -60,7 +60,7 @@ class OrganizeDirectory:
                     Path(f"{self._folders[format_type]}").mkdir(exist_ok=True)
 
     def _rm_empty_folders(self) -> None:
-        """ Remove empty folders after organization. """
+        """ After organization, delete all empty folders. """
         os.chdir(self._final_path)
 
         for item in os.listdir():
@@ -74,7 +74,9 @@ class OrganizeDirectory:
                     folder.rmdir()
 
     def _move_files(self, files: list[Path]) -> None:
-        """ Move files to the final destination. It may  """
+        """ Move files from og_path to final_path, potentially within folders as well. """
+        os.chdir(self._og_path)
+
         for file in files:
             for file_type in self._formats.formats:
                 # Moving Process.
@@ -83,7 +85,7 @@ class OrganizeDirectory:
 
                     # No folders specified.
                     if not self._folders:
-                        shutil.move(file, final_location)
+                        shutil.move(file, self._final_path)
                         break
 
                     # File Ext tied to a folder. Move file to folders.

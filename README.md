@@ -3,7 +3,7 @@
 ---
 
 ## features to add: 
-- Inheritance: Abstract organization class, Child Desktop Organization class
+- Inheritance: Abstract Organization class. Desktop Organization Class &  Child Desktop Organization class
 - Logging: Log every time a file is organized to a file
 - Automation via Chron Jobs
 - Organization Tests

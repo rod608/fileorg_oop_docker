@@ -1,7 +1,7 @@
 import os
 import pytest
 
-from app.dir_organize import DirOrganize
+from app.organize.directory_org import OrganizeDirectory
 from app.formats import Format
 from organize_script import my_formats
 
@@ -75,12 +75,12 @@ def preferred_formats() -> Format:
 
 # DirOrganize Fixtures
 @pytest.fixture()
-def dir_org(preferred_formats) -> DirOrganize:
+def dir_org(preferred_formats) -> OrganizeDirectory:
     """ DirOrganize Obj w/ Arguments for organizing a desktop. """
     formats = my_formats()  # Custom format obj made above.
     paths = (os.path.expanduser("~/Desktop"), os.path.expanduser("~/Desktop"))  # Desktop Path Twice.
     folders = {}
-    return DirOrganize()
+    return OrganizeDirectory()
 
 
 @pytest.fixture()

@@ -5,11 +5,11 @@ from pathlib import Path
 from app.formats import Format
 
 
-class DirOrganize:
+class OrganizeDirectory:
     """ Class for Organizing Files from one Directory into another Directory or Folders """
 
     def __init__(self, formats_obj: Format, paths: tuple[str, str], folders: dict[str, str] = None):
-        """ Constructor & Instance Attributes: Overloading not supported in Python 😞 """
+        """ Constructor & Instance Attributes: Method Overloading not supported in Python 😞 """
         self._formats = formats_obj  # Format Types & Their Extensions.
         self._og_path = paths[0]  # Directory to Organize.
         self._final_path = paths[1]  # Target Directory. Folders are created, files are moved.
@@ -34,7 +34,7 @@ class DirOrganize:
         self._rm_empty_folders()
 
     def _files(self) -> list[Path]:
-        """ Return a list of Path objects instantiated w/ the files in the directory in mind. """
+        """ Return a list of Path objects that are instantiated w/ the files in the original directory in mind. """
         os.chdir(self._og_path)
 
         files = []

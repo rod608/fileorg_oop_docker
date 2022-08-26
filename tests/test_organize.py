@@ -35,7 +35,8 @@ def test_file_creation(org_dir) -> None:
     assert org_dir._files() == file_list
 
     # delete created files.
-
+    for file in file_list:
+        os.remove(file)
 
 def test_folder_functionality(org_dir) -> None:
     """ Testing the folder creation and empty folder removal functionality. """

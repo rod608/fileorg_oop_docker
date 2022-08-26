@@ -38,6 +38,7 @@ def test_file_creation(org_dir) -> None:
     for file in file_list:
         os.remove(file)
 
+
 def test_folder_functionality(org_dir) -> None:
     """ Testing the folder creation and empty folder removal functionality. """
     # change the CWD to the destination path.
@@ -69,3 +70,7 @@ def test_folder_functionality(org_dir) -> None:
 
     for item in non_existent_folders:
         assert item not in folder_set
+
+
+def test_move_files(org_dir) -> None:
+    """ Testing the file moving functionality. Very important for organization. """

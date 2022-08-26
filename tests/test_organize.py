@@ -2,18 +2,15 @@
 import os
 from pathlib import Path
 from definitions import Definitions
-from app.organize.formats import Format
-from app.organize.org_desktop import OrganizeDesktop
-from app.organize.org_directory import OrganizeDirectory
 
 
 def test_file_creation(org_dir) -> None:
     """ Testing the file creation functionality. """
-    # change CWD to the desktop
+    # change CWD to the desktop.
     os.chdir(os.path.expanduser("~/Desktop"))
     assert os.getcwd() == "/Users/rod608/Desktop"
 
-    # create some files
+    # create some files.
     f1 = Definitions.DESKTOP_PATH + "/img.png"
     open(f1, 'a').close()
     f2 = Definitions.DESKTOP_PATH + "/video.mp4"
@@ -37,9 +34,37 @@ def test_file_creation(org_dir) -> None:
     assert not file_set
     assert org_dir._files() == file_list
 
+    # delete created files.
 
-def test_folder_creation(org_dir) -> None:
-    """ Testing the folder creation functionality. """
+
+def test_folder_functionality(org_dir) -> None:
+    """ Testing the folder creation and empty folder removal functionality. """
     # change the CWD to the destination path.
     os.chdir(org_dir._final_path)
     assert os.getcwd() == Definitions.DOCUMENTS_PATH
+
+    # test documents folder creation.
+    org_dir._folders["rod_formats"] = "rods"  # this should not be created.
+    org_dir._create_folders()
+
+    folder_set = {"audios", "videos", "images", "roms", "rods"}
+    for file in os.listdir():
+        folder = Path(file)
+        if folder.is_dir() and folder.name in folder_set:
+            folder_set.remove(folder.name)
+
+    assert len(folder_set) == 1 and "rods" in folder_set
+
+    # test empty folder removal.
+    org_dir._rm_empty_folders()
+    assert os.getcwd() == org_dir._final_path
+    non_existent_folders = ["audios", "videos", "images", "roms"]
+
+    folder_set = set()
+    for file in os.listdir():
+        folder = Path(file)
+        if folder.is_dir():
+            folder_set.add(folder.name)
+
+    for item in non_existent_folders:
+        assert item not in folder_set

@@ -73,6 +73,8 @@ class OrganizeDirectory:
                     os.chdir(self._final_path)
                     folder.rmdir()
 
+        os.chdir(self._final_path)
+
     def _move_files(self, files: list[Path]) -> None:
         """ Move files from og_path to final_path, potentially within folders as well. """
         os.chdir(self._og_path)

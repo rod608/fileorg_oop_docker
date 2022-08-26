@@ -1,5 +1,5 @@
-from app.formats import Format
-from directory_org import OrganizeDirectory
+from app.organize.formats import Format
+from app.organize.org_directory import OrganizeDirectory
 from definitions import Definitions
 
 

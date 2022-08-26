@@ -1,7 +1,6 @@
-import os
-
-from app.organize.directory_org import OrganizeDirectory
-from app.formats import Format
+from app.organize.formats import Format
+from organize.org_directory import OrganizeDirectory
+from organize.org_desktop import OrganizeDesktop
 from definitions import Definitions
 
 
@@ -31,16 +30,28 @@ def my_formats() -> Format:
 
 
 def organize_desktop_to_documents() -> None:
-    """ Organizes my desktop based on my custom Format and DirOrganize classes. """
+    """ Organizes the desktop based on the custom Format and DirOrganize classes. """
     formats = my_formats()  # Custom format obj made above.
     paths = (Definitions.DESKTOP_PATH, Definitions.DOCUMENTS_PATH)  # Desktop Path Twice.
     folders = {}
 
-    # for format_type in formats.formats:
-    #     folders[format_type] = format_type.split("_")[0] + "s"
+    for format_type in formats.formats:
+        folders[format_type] = format_type.split("_")[0] + "s"
 
-    desktop_org = OrganizeDirectory(formats, paths, folders)
-    desktop_org.organize()
+    desktop_documents_org = OrganizeDirectory(formats, paths, folders)
+    desktop_documents_org.organize()
+
+
+def organize_desktop_to_folders() -> None:
+    """ Organizes the files on the desktop into folders. """
+    formats = my_formats()  # Custom format obj made above.
+    folders = {}
+
+    for format_type in formats.formats:
+        folders[format_type] = format_type.split("_")[0] + "s"
+
+    desktop_org_obj = OrganizeDesktop(formats, folders)
+    desktop_org_obj.organize()
 
 
 # main method; signifies a script
@@ -48,4 +59,5 @@ if __name__ == "__main__":
     # setup logs
 
     # run the script
-    organize_desktop_to_documents()
+    # organize_desktop_to_documents()
+    organize_desktop_to_folders()

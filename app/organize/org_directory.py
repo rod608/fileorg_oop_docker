@@ -2,7 +2,7 @@ import os
 import shutil
 
 from pathlib import Path
-from app.formats import Format
+from app.organize.formats import Format
 
 
 class OrganizeDirectory:

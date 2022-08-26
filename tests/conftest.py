@@ -1,9 +1,8 @@
 import os
 import pytest
 
-from app.organize.directory_org import OrganizeDirectory
-from app.formats import Format
-from organize_script import my_formats
+from app.organize.formats import Format
+from app.organize.org_directory import OrganizeDirectory
 
 
 # Format Fixtures
@@ -49,41 +48,51 @@ def f_obj_types_ext(default_formats_dict) -> Format:
 
 
 @pytest.fixture()
-def preferred_formats() -> Format:
-    """ Dictionary w/ my preferred formats. """
-    pref_f = {
-        "audio_formats": (".3ga", ".aac", ".ac3", ".aif", ".aiff",
-                          ".alac", ".amr", ".ape", ".au", ".dss",
-                          ".flac", ".flv", ".m4a", ".m4b", ".m4p",
-                          ".mp3", ".mpga", ".ogg", ".oga", ".mogg",
-                          ".opus", ".qcp", ".tta", ".voc", ".wav",
-                          ".wma", ".wv"),
+def my_formats() -> Format:
+    """ Creates a Format class w/ my favorite format types and extensions. """
+    f_types = ["audio_formats", "video_formats", "image_formats", "rom_extensions"]
+    f = Format(f_types)
 
-        "video_formats": (".webm", ".MTS", ".M2TS", ".TS", ".mov",
-                          ".mp4", ".m4p", ".m4v", ".mxf"),
+    f.add_ext("audio_formats", [".3ga", ".aac", ".ac3", ".aif", ".aiff",
+                                ".alac", ".amr", ".ape", ".au", ".dss",
+                                ".flac", ".flv", ".m4a", ".m4b", ".m4p",
+                                ".mp3", ".mpga", ".ogg", ".oga", ".mogg",
+                                ".opus", ".qcp", ".tta", ".voc", ".wav",
+                                ".wma", ".wv"])
 
-        "image_formats": (".jpg", ".jpeg", ".jfif", ".pjpeg", ".pjp", ".png",
-                          ".gif", ".webp", ".svg", ".apng", ".avif"),
+    f.add_ext("video_formats", [".webm", ".MTS", ".M2TS", ".TS", ".mov",
+                                ".mp4", ".m4p", ".m4v", ".mxf"])
 
-        "rom_extensions": (".nes", ".smc", ".sfc", ".gen", ".n64", ".gb", ".gbc",
-                           ".gba", ".nds", ".dsi", ".cia", ".3ds", ".gcm", ".nkit.iso",
-                           ".iso", ".wbfs", ".nsp", ".xci", ".vpk")
+    f.add_ext("image_formats", [".jpg", ".jpeg", ".jfif", ".pjpeg", ".pjp", ".png",
+                                ".gif", ".webp", ".svg", ".apng", ".avif"])
 
-    }
-    return pref_f
+    f.add_ext("rom_extensions", [".nes", ".smc", ".sfc", ".gen", ".n64", ".gb", ".gbc",
+                                 ".gba", ".nds", ".dsi", ".cia", ".3ds", ".gcm", ".nkit.iso",
+                                 ".iso", ".wbfs", ".nsp", ".xci", ".vpk"])
+
+    return f
 
 
 # DirOrganize Fixtures
 @pytest.fixture()
-def dir_org(preferred_formats) -> OrganizeDirectory:
+def org_dir(my_formats) -> OrganizeDirectory:
     """ DirOrganize Obj w/ Arguments for organizing a desktop. """
-    formats = my_formats()  # Custom format obj made above.
-    paths = (os.path.expanduser("~/Desktop"), os.path.expanduser("~/Desktop"))  # Desktop Path Twice.
+    paths = (os.path.expanduser("~/Desktop"), os.path.expanduser("~/Documents"))  # Desktop Path Twice.
+
     folders = {}
-    return OrganizeDirectory()
+    for f_type in my_formats.formats:
+        folders[f_type] = f_type.split("_")[0] + "s"
+
+    return OrganizeDirectory(my_formats, paths, folders)
 
 
 @pytest.fixture()
-def preferred_formats() -> Format:
-    """ Creates a Format class w/ my favorite format types and extensions. """
-    my_formats()
+def org_desk(my_formats) -> OrganizeDirectory:
+    """ DirOrganize Obj w/ Arguments for organizing a desktop. """
+    paths = (os.path.expanduser("~/Desktop"), os.path.expanduser("~/Desktop"))  # Desktop Path Twice.
+
+    folders = {}
+    for f_type in my_formats.formats:
+        folders[f_type] = f_type.split("_")[0] + "s"
+
+    return OrganizeDirectory(my_formats, paths, folders)

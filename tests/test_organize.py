@@ -107,9 +107,24 @@ def test_move_files(org_dir) -> None:
 
     assert not ext_set
 
-    # move the files.
+    # create folders, move the files, delete empty folders
     org_dir._create_folders()
     org_dir._move_files(file_list)
 
+    os.chdir(org_dir._final_path)
+    Path("test_dir").mkdir(exist_ok=True)
+    org_dir._rm_empty_folders()
+
+    # assert that the folders exist.
+    folder_set = set()
+    for item in os.listdir():
+        folder = Path(item)
+        if folder.is_dir():
+            folder_set.add(folder.name)
+
+    assert "test_dir" not in folder_set
+    assert "audios" in folder_set and "images" in folder_set and "roms" in folder_set and "videos" in folder_set
+
+    # ensure that files were moved. check the og_path and final_path.
+
     # end, delete all empty folders.
-    # org_dir._rm_empty_folders()

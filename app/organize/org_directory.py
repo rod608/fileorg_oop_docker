@@ -88,18 +88,21 @@ class OrganizeDirectory:
                     # No folders specified.
                     if not self._folders:
                         # Move if the file doesn't already exist in the final path.
-                        shutil.move(file, self._final_path)
+                        if not os.path.exists(final_location + f"/{file.name}"):
+                            shutil.move(file, final_location)
                         break
 
                     # File Ext tied to a folder. Move file to folders.
                     elif file_type in self._folders:
                         final_location = final_location.rstrip("/") + f"/{self._folders[file_type]}"
                         # Move if the file doesn't already exist in the final path.
-                        shutil.move(file, final_location)
+                        if not os.path.exists(final_location + f"/{file.name}"):
+                            shutil.move(file, final_location)
                         break
 
                     # File Ext not tied to a folder. Move file to final destination.
                     else:
                         # Move if the file doesn't already exist in the final path.
-                        shutil.move(file, final_location)
+                        if not os.path.exists(final_location + f"/{file.name}"):
+                            shutil.move(file, final_location)
                         break

@@ -74,3 +74,42 @@ def test_folder_functionality(org_dir) -> None:
 
 def test_move_files(org_dir) -> None:
     """ Testing the file moving functionality. Very important for organization. """
+    # change CWD to the desktop.
+    os.chdir(Definitions.DESKTOP_PATH)
+    assert os.getcwd() == os.path.expanduser("~/Desktop")
+
+    # create files for moving.
+    ext_set = set()  # will use later to assert file creation.
+
+    for f_type in org_dir._formats.formats:
+        file_name = f_type.split("_")[0]   # audio, video, image, rom w/ each of their ext
+        for f_ext in org_dir._formats.formats[f_type]:
+            # populate the ext_set
+            ext_set.add(f_ext)
+            # file creation
+            cur_file = Definitions.DESKTOP_PATH + "/" + file_name + f_ext
+            open(cur_file, 'a').close()
+
+    # assert that the files were created.
+    assert ext_set
+    file_list = []  # these files will be moved later.
+
+    for item in os.listdir():
+        file = Path(item)
+        if not file.suffixes:
+            continue
+
+        file_list.append(file)
+
+        cur_ext = "".join(file.suffixes)
+        if cur_ext in ext_set:
+            ext_set.remove(cur_ext)
+
+    assert not ext_set
+
+    # move the files.
+    org_dir._create_folders()
+    org_dir._move_files(file_list)
+
+    # end, delete all empty folders.
+    # org_dir._rm_empty_folders()

@@ -3,10 +3,9 @@
 ---
 
 ## features to add: 
-- Inheritance: Abstract Organization class. Desktop Organization Class &  Child Desktop Organization class
+- Organization Tests
 - Logging: Log every time a file is organized to a file
 - Automation via Chron Jobs
-- Organization Tests
 - Nice to Have: GUI, Docker Containerization + GitHub Action CI/CD
 
 ## Process

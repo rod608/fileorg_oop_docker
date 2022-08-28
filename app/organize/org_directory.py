@@ -90,6 +90,8 @@ class OrganizeDirectory:
                         # Move if the file doesn't already exist in the final path.
                         if not os.path.exists(final_location + f"/{file.name}"):
                             shutil.move(file, final_location)
+                        else:
+                            os.remove(file)
                         break
 
                     # File Ext tied to a folder. Move file to folders.
@@ -98,6 +100,8 @@ class OrganizeDirectory:
                         # Move if the file doesn't already exist in the final path.
                         if not os.path.exists(final_location + f"/{file.name}"):
                             shutil.move(file, final_location)
+                        else:
+                            os.remove(file)
                         break
 
                     # File Ext not tied to a folder. Move file to final destination.
@@ -105,4 +109,6 @@ class OrganizeDirectory:
                         # Move if the file doesn't already exist in the final path.
                         if not os.path.exists(final_location + f"/{file.name}"):
                             shutil.move(file, final_location)
+                        else:
+                            os.remove(file)
                         break

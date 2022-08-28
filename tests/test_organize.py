@@ -81,7 +81,6 @@ def test_move_files(org_dir) -> None:
     # change CWD to the desktop, create fake mp5 video file.
     os.chdir(org_dir._og_path)
     assert os.getcwd() == os.path.expanduser("~/Desktop")
-    # open(org_dir._og_path + "/fake.mp5", 'a').close()
 
     # create files for moving.
     ext_set = set()  # will use later to assert file creation.
@@ -132,7 +131,6 @@ def test_move_files(org_dir) -> None:
 
     # ensure that files were moved part 1. check the og_path.
     os.chdir(org_dir._og_path)
-    # open(org_dir._og_path + "/jimmy.mp7", 'a').close()  # this should be within the dir.
 
     file_set = set(file_list)
     for item in os.listdir():
@@ -141,8 +139,6 @@ def test_move_files(org_dir) -> None:
             continue
         else:
             assert file.name not in file_set
-
-    # os.remove(org_dir._og_path + "/jimmy.mp5")
 
     # ensure that files were moved part 2. check the final_path.
     os.chdir(org_dir._final_path)

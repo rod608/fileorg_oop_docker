@@ -74,15 +74,20 @@ def test_folder_functionality(org_dir) -> None:
 
 def test_move_files(org_dir) -> None:
     """ Testing the file moving functionality. Very important for organization. """
-    # change CWD to the desktop.
-    os.chdir(Definitions.DESKTOP_PATH)
+    # add an extension to org_dir that isn't tied to a folder.
+    org_dir._formats.formats["fake_format"].add(".mp5")
+    assert ".mp5" in org_dir._formats.formats["fake_format"]
+
+    # change CWD to the desktop, create fake mp5 video file.
+    os.chdir(org_dir._og_path)
     assert os.getcwd() == os.path.expanduser("~/Desktop")
+    # open(org_dir._og_path + "/fake.mp5", 'a').close()
 
     # create files for moving.
     ext_set = set()  # will use later to assert file creation.
 
     for f_type in org_dir._formats.formats:
-        file_name = f_type.split("_")[0]   # audio, video, image, rom w/ each of their ext
+        file_name = f_type.split("_")[0]  # audio, video, image, rom w/ each of their ext
         for f_ext in org_dir._formats.formats[f_type]:
             # populate the ext_set
             ext_set.add(f_ext)
@@ -125,6 +130,36 @@ def test_move_files(org_dir) -> None:
     assert "test_dir" not in folder_set
     assert "audios" in folder_set and "images" in folder_set and "roms" in folder_set and "videos" in folder_set
 
-    # ensure that files were moved. check the og_path and final_path.
+    # ensure that files were moved part 1. check the og_path.
+    os.chdir(org_dir._og_path)
+    # open(org_dir._og_path + "/jimmy.mp7", 'a').close()  # this should be within the dir.
 
-    # end, delete all empty folders.
+    file_set = set(file_list)
+    for item in os.listdir():
+        file = Path(item)
+        if file.is_dir() or not file.suffixes:
+            continue
+        else:
+            assert file.name not in file_set
+
+    # os.remove(org_dir._og_path + "/jimmy.mp5")
+
+    # ensure that files were moved part 2. check the final_path.
+    os.chdir(org_dir._final_path)
+
+    assert os.path.exists(f"{org_dir._final_path}/fake.mp5")
+    os.remove(f"{org_dir._final_path}/fake.mp5")
+
+    for file_type in org_dir._folders:
+        os.chdir(org_dir._final_path + "/" + org_dir._folders[file_type])
+        for item in os.listdir():
+            file = Path(item)
+            if file in file_set:
+                os.remove(file)
+                file_set.remove(file)
+
+    assert file_set.pop().name == "fake.mp5"
+    assert not file_set
+
+    # end, delete all files from created folders.
+    org_dir._rm_empty_folders()

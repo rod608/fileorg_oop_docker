@@ -16,4 +16,3 @@ if __name__ == "__main__":
     logging.config.dictConfig(logging_config.LOGGING_CONFIG_DICT)
     logger = logging.getLogger("org_logger")
     logger.warning("Test 2.")
-

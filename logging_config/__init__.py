@@ -21,7 +21,7 @@ LOGGING_CONFIG_DICT = {
             "level": "INFO",
             "class": "logging.StreamHandler",  # required.
             "formatter": "standard",
-            "stream": 'ext://sys.stdout',
+            "stream": "ext://sys.stdout",
         },
         "org_handler": {
             "level": "INFO",
@@ -39,7 +39,7 @@ LOGGING_CONFIG_DICT = {
             "propagate": True
         },
         "org_logger": {
-            "handlers": ["org_handler"],
+            "handlers": ["default", "org_handler"],
             "level": "INFO",
             "propagate": False
         }

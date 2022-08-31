@@ -7,9 +7,8 @@
 
 ## features to add:
 - Logging: Log every time a file is organized to a file
-- General Cleanup w/ os methods. Use more from OrganizeDirectory instead of Definitions. 
 - Automation via Chron Jobs
-- Nice to Have: GUI, Docker Containerization + GitHub Action CI/CD
+- Nice to Have: GUI, Docker Containerization + GitHub Action CI/CD, Automation via API
 
 ## Process
 ### formats.py

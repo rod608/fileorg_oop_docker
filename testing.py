@@ -7,8 +7,6 @@ from definitions import Definitions
 
 # main method; signifies a script
 if __name__ == "__main__":
-    # set up the logs.
-
     # ensure the log directory exists.
     if not os.path.exists(Definitions.LOG_DIR):
         os.mkdir(Definitions.LOG_DIR)
@@ -17,4 +15,5 @@ if __name__ == "__main__":
     # configure logging setup.
     logging.config.dictConfig(logging_config.LOGGING_CONFIG_DICT)
     logger = logging.getLogger("org_logger")
-    logger.info("Hello.")
+    logger.warning("Test 2.")
+

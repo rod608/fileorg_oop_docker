@@ -7,20 +7,20 @@ from definitions import Definitions
 def test_file_creation(org_dir) -> None:
     """ Testing the file creation functionality. """
     # change CWD to the desktop.
-    os.chdir(os.path.expanduser("~/Desktop"))
-    assert os.getcwd() == "/Users/rod608/Desktop"
+    os.chdir(org_dir._og_path)
+    assert os.getcwd() == Definitions.DESKTOP_PATH
 
     # create some files.
-    f1 = Definitions.DESKTOP_PATH + "/img.png"
+    f1 = os.path.join(org_dir._og_path, "img.png")
     open(f1, 'a').close()
-    f2 = Definitions.DESKTOP_PATH + "/video.mp4"
+    f2 = os.path.join(org_dir._og_path, "video.mp4")
     open(f2, 'a').close()
-    f3 = Definitions.DESKTOP_PATH + "/audio.mp3"
+    f3 = os.path.join(org_dir._og_path, "audio.mp3")
     open(f3, 'a').close()
-    f4 = Definitions.DESKTOP_PATH + "/pokemon.gba"
+    f4 = os.path.join(org_dir._og_path, "pokemon.gba")
     open(f4, 'a').close()
 
-    # assert they were created, test the method.
+    # assert they were created, test _files().
     file_set = {"img.png", "video.mp4", "audio.mp3", "pokemon.gba"}
     file_list: list[Path] = []
 
@@ -80,7 +80,7 @@ def test_move_files(org_dir) -> None:
 
     # change CWD to the desktop, create fake mp5 video file.
     os.chdir(org_dir._og_path)
-    assert os.getcwd() == os.path.expanduser("~/Desktop")
+    assert os.getcwd() == Definitions.DESKTOP_PATH
 
     # create files for moving.
     ext_set = set()  # will use later to assert file creation.
@@ -91,7 +91,7 @@ def test_move_files(org_dir) -> None:
             # populate the ext_set
             ext_set.add(f_ext)
             # file creation
-            cur_file = Definitions.DESKTOP_PATH + "/" + file_name + f_ext
+            cur_file = os.path.join(org_dir._og_path, file_name + f_ext)
             open(cur_file, 'a').close()
 
     # assert that the files were created.
@@ -116,7 +116,7 @@ def test_move_files(org_dir) -> None:
     org_dir._move_files(file_list)
 
     os.chdir(org_dir._final_path)
-    Path("test_dir").mkdir(exist_ok=True)
+    Path("test_dir").mkdir(exist_ok=True)  # this should be deleted.
     org_dir._rm_empty_folders()
 
     # assert that the folders exist.

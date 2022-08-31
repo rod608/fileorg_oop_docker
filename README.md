@@ -2,9 +2,12 @@
 
 ---
 
-## features to add: 
-- Organization Tests
+## existing features:
+- Organize (move) files from one directory to another based on file types and their extensions.
+
+## features to add:
 - Logging: Log every time a file is organized to a file
+- General Cleanup w/ os methods. Use more from OrganizeDirectory instead of Definitions. 
 - Automation via Chron Jobs
 - Nice to Have: GUI, Docker Containerization + GitHub Action CI/CD
 

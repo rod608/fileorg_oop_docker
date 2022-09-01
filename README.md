@@ -7,6 +7,7 @@
 
 ## features to add:
 - Logging: Log every time a file is organized to a file
+  - hi
 - Automation via Chron Jobs
 - Nice to Have: GUI, Docker Containerization + GitHub Action CI/CD, Automation via API
 

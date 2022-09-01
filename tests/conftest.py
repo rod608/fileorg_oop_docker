@@ -97,10 +97,3 @@ def org_desk(my_formats) -> OrganizeDirectory:
         folders[f_type] = f_type.split("_")[0] + "s"
 
     return OrganizeDirectory(my_formats, paths, folders)
-
-
-# Logging Fixtures
-@pytest.fixture()
-def logger_org() -> logging.Logger:
-    """ Create & Return a Logger specific to any of the Organization Classes. """
-    pass

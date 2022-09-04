@@ -6,6 +6,11 @@ from definitions import Definitions
 
 def test_file_creation(org_dir) -> None:
     """ Testing the file creation functionality. """
+    # Create the Desktop & Documents directories if they don't exist. This will be the og_path.
+    if not os.path.exists(Definitions.DESKTOP_PATH) or not os.path.exists(Definitions.DOCUMENTS_PATH):
+        Path(Definitions.DESKTOP_PATH).mkdir(exist_ok=True)
+        Path(Definitions.DOCUMENTS_PATH).mkdir(exist_ok=True)
+
     # change CWD to the desktop.
     os.chdir(org_dir._og_path)
     assert os.getcwd() == Definitions.DESKTOP_PATH
@@ -77,11 +82,6 @@ def test_move_files(org_dir) -> None:
     # add an extension to org_dir that isn't tied to a folder.
     org_dir._formats.formats["fake_format"].add(".mp5")
     assert ".mp5" in org_dir._formats.formats["fake_format"]
-
-    # Create the Desktop & Documents directories if they don't exist. This will be the og_path.
-    if not os.path.exists(Definitions.DESKTOP_PATH) or not os.path.exists(Definitions.DOCUMENTS_PATH):
-        Path(Definitions.DESKTOP_PATH).mkdir(exist_ok=True)
-        Path(Definitions.DOCUMENTS_PATH).mkdir(exist_ok=True)
 
     # change CWD to the desktop, create fake mp5 video file.
     os.chdir(org_dir._og_path)

@@ -9,6 +9,7 @@ from app.organize.org_directory import OrganizeDirectory
 # Format Fixtures
 @pytest.fixture()
 def default_formats_dict() -> dict:
+    """ Returns a dictionary w/ audio, video, and image formats paired to a list of their associated extensions. """
     default_formats: dict[str, list[str]] = {
         "audio_formats": [".3ga", ".aac", ".ac3", ".aif", ".aiff",
                           ".alac", ".amr", ".ape", ".au", ".dss",

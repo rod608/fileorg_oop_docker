@@ -10,6 +10,8 @@
 
 ![Production Workflow](https://github.com/rod608/fileorg_oop_docker/actions/workflows/prod.yml/badge.svg)
 
+---
+
 ## existing features:
 - Organize files based on user defined file types and associated file extensions.
 - Files will either move directly into the target directory 

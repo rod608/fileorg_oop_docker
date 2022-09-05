@@ -14,7 +14,7 @@ class OrganizeDirectory:
     def __init__(self, formats_obj: Format, paths: tuple[str, str], folders: dict[str, str] = None):
         """ Instance Attributes. Specify format types/extensions, paths to organize, and folders to create. """
         self._formats = formats_obj  # Format Types & Their Extensions.
-        self._og_path = paths[0]     # Directory w/ Files to Organize.
+        self._og_path = paths[0]  # Directory w/ Files to Organize.
         self._final_path = paths[1]  # Target Directory. Folders are created, files are moved.
         self._folders = folders if folders else {}  # format_type -> folder_name
 
@@ -76,7 +76,6 @@ class OrganizeDirectory:
                     Path(f"{self._folders[format_type]}").mkdir(exist_ok=True)
                     logger.info(f"folder created or already exists.")
 
-
     def _rm_empty_folders(self) -> None:
         """ After organization, delete all empty folders. """
         logger = logging.getLogger("org_logger")
@@ -134,16 +133,22 @@ class OrganizeDirectory:
                         self.__move_helper(final_location, file)
                         break
 
-    @staticmethod
-    def __move_helper(final_location, file) -> None:
+    def __move_helper(self, final_location, file) -> None:
         """ Helper function for move_files(). Given a file, move if only one of it exists otherwise delete it. """
         logger = logging.getLogger("org_logger")
 
+        # The same file doesn't exist in the final location. Move it!
         if not os.path.exists(os.path.join(final_location, file.name)):
             logger.info(f"Moving to \"{final_location}\"")
             shutil.move(file, final_location)
             logger.info(f"File moved.")
+        # The file exists in the final location.
         else:
-            logger.info(f"Duplicate File {file.name} found. Removing newest entry.")
-            os.remove(file)
-            logger.info(f"File removed.")
+            # Edge Case: og_path == final_path and no folders were supplied. Just leave it.
+            if final_location == self._og_path:
+                pass
+            # Otherwise, delete the one in the og_path.
+            else:
+                logger.info(f"Duplicate File {file.name} found. Removing newest entry.")
+                os.remove(file)
+                logger.info(f"File removed.")

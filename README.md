@@ -1,4 +1,4 @@
-# Unix File Organization - Testing, Logging, 
+# Unix File Organization - Testing, Logging, Containerization, Github Actions
 
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -10,7 +10,8 @@
 
 ![Production Workflow](https://github.com/rod608/fileorg_oop_docker/actions/workflows/prod.yml/badge.svg)
 
----
+## Description:
+This is the base for a file organization app that can move files from one directory to another directory (or into sub-folders within either directory) based on file types and their associated extensions.
 
 ## existing features:
 - Organize files based on user defined file types and associated file extensions.

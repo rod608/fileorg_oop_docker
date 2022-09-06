@@ -28,7 +28,7 @@ user is left with their files successfully organized. All steps below are their 
 3) Move files based on their format types. They may be moved to either the "final" directory's root or a sub-folder tied to the said format type.
 4) Delete all empty folders on the "final" directory. Process complete!
 
-<img src="img/organize_code.jpg" alt="Alt text" title="Optional title" style="display: block; margin: 0 auto; max-width: 80%; box-shadow: 0px 0px 5px 0px;">
+<img src="img/organize_code.jpg" alt="Alt text" title="Optional title" style="display: block; margin: 0 auto; max-width: 80%; box-shadow: 0px 0px 5px 0px; border-radius: 5px;">
 
 
 ## app -> organize:
